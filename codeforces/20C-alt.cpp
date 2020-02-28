@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+ 
 const int sz = 1e5;
 vector< int > adj [sz+2], cost[sz+2];
 int dist[sz+2];
@@ -8,22 +8,25 @@ int parent[sz+2];
 int vertices, edges;
 typedef pair<int, int > pii;
 
-
+ 
 void dijkstra() {
+    bool vis[vertices+2];
+    memset(vis, 0, sizeof vis);
     for(int i=0; i<=vertices; i++) {
         dist[i] = INT_MAX;
     }
     priority_queue< pii, vector<pii>, greater<pii> > pq;
     pq.push(pii(0, 1));
-
+ 
     while(!pq.empty()) {
-        pii top = pq.top();
+        int u = pq.top().second;
         pq.pop();
-        int u = top.second;
+        if(u == vertices) break;
+        vis[u] = true;
         int range = adj[u].size();
         for(int i=0; i<range; i++) {
             int v = adj[u][i];
-            if(dist[u]+cost[u][i] < dist[v]) {
+            if(!vis[v] && dist[u]+cost[u][i] < dist[v]) {
                 dist[v] = dist[u] + cost[u][i];
                 pq.push(pii(dist[v], v));
                 parent[v] = u;
@@ -42,7 +45,7 @@ void dijkstra() {
         cout<<endl;
     }
 }
-
+ 
 int main() 
 {
      #ifndef ONLINE_JUDGE
@@ -59,4 +62,5 @@ int main()
         cost[v].push_back(w);
     }
     dijkstra();
+    return 0;
 }

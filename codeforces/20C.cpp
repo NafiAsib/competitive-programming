@@ -23,6 +23,8 @@ struct node {
 };
 
 void dijkstra() {
+    bool vis[n+2];
+    memset(vis, 0, sizeof vis);
     priority_queue< node > q;
     q.push(node(1, 0));
     dist[1] = 0;
@@ -30,11 +32,12 @@ void dijkstra() {
         node front = q.top();
         q.pop();
         int u = front.u;
+        vis[u] = true;
         int range = adj[u].size();
         for(int i=0; i<range; i++) 
         {
             int v = adj[u][i];
-            if(dist[u]+cost[u][i] < dist[v]) {
+            if(!vis[v] && dist[u]+cost[u][i] < dist[v]) {
                 dist[v] = dist[u] + cost[u][i];
                 q.push(node(v, dist[v]));
                 parent[v] = u;
