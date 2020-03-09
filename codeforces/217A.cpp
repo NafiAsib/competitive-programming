@@ -16,26 +16,39 @@ const long long linf = 0x3f3f3f3f3f3f3f3fLL;
 /* Templates */
 template < typename T >
 ostream &operator << ( ostream & os, const vector< T > &v ) {
-	os << "{";
-	for(auto it = v.begin(); it != v.end(); ++it) {
-		if( it != v.begin() ) os << ", ";
-		os << *it;
-	}
+    os << "{";
+    for(auto it = v.begin(); it != v.end(); ++it) {
+        if( it != v.begin() ) os << ", ";
+        os << *it;
+    }
     return os << "}\n";
 }
 
 template <typename T>
 void see( T a[], int n ) {
-	for(int i = 0; i < n; ++i) cout << a[i] << ' ';
-	cout << endl;
+    for(int i = 0; i < n; ++i) cout << a[i] << ' ';
+    cout << endl;
 }
 
 int main()
 {
     #ifndef ONLINE_JUDGE
-	    freopen("../io/in.txt", "r", stdin);
-	    freopen("../io/out.txt", "w", stdout);
+        freopen("../io/in.txt", "r", stdin);
+        freopen("../io/out.txt", "w", stdout);
     #endif // ONLINE_JUDGE
-
+    int n;
+    scanf("%d", &n);
+    int ara[n+2][2];
+    int maxy = 0;
+    for(int i=0; i<n; i++) 
+    {
+        cin>>ara[i][0]>>ara[i][1];
+        maxy = max(maxy, ara[i][1]);
+    }
+    int add = 0;
+    for(int i=0; i<n; i++) {
+        if(ara[i][1]<maxy) add++;
+    }
+    printf("%d\n", add);
     return 0;
 }

@@ -6,7 +6,7 @@ const int maxn = 2000+2;
 vector< int > adj[maxn];
 int depth[maxn];
 bool vis[maxn];
-int mx = 0;
+int mx = 1;
 
 void bfs(int source) {
     vis[source] = true;
