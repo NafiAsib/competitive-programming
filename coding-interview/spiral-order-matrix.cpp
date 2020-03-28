@@ -1,42 +1,68 @@
-#include <iostream>
-using namespace std;
 
-int m, n;
-bool vis[3][3];
-int ans[9];
-int ara[3][3];
 
-void spiral_order_matrix(int i, int j, int indx) 
-{
-    ans[indx] = ara[i][j];
-    vis[i][j] = 1;
-    if(i == 2 and j == 0) cout<<"came"<<endl;
-    if(i == 2 and j == 1) cout<<"8"<<endl;
-    if(j+1<n and !vis[i][j+1]) spiral_order_matrix(i, j+1, indx+1);
-    else if(i+1<m and !vis[i+1][j]) spiral_order_matrix(i+1, j, indx+1);
-    else if(j-1>=0 and !vis[i][j-1]) spiral_order_matrix(i, j-1, indx+1);
-    else if(i-1>=0 and !vis[i-1][j]) spiral_order_matrix(i-1, j, indx+1);
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* spiralOrder(int** matrix, int matrixSize, int* matrixColSize, int* returnSize){
+    int bottom = matrixSize; //m
+    int right = *matrixColSize; //n
+    
+
+    if(bottom == 0) {
+        *returnSize = 0;
+        int* ans = (int*)malloc(10*sizeof(int));
+        return ans;
+    }
+    else if(right == 1) {
+        *returnSize = bottom;
+        int* ans = (int*)malloc(bottom*sizeof(int));
+        for(int i=0; i<bottom; i++) ans[i] = matrix[i][0];
+        return ans;
+    }
+    
+    else {
+        *returnSize = bottom*right;
+        int* ans = (int*)malloc((bottom*right)*sizeof(int));
+        
+        bottom -= 1;
+        right -= 1;
+        int indx = 0;
+        int i = 0, j = 0;
+        int top = 0, left = 0;
+        
+        
+        int dir = 1;
+        
+        while(top<=bottom && left <= right) {
+            
+            if(dir == 1) {
+                i = top;
+                for(j = left; j<=right; j++) ans[indx++] = matrix[i][j];
+                top++;
+                dir = 2;
+            }
+            else if(dir == 2) {
+                j = right;
+                for(i=top;i<=bottom; i++) ans[indx++] = matrix[i][j];
+                dir = 3;
+                right--;
+            }
+            else if(dir == 3) {
+                i = bottom;
+                for(j = right; j>=left; j--) ans[indx++] = matrix[i][j];
+                bottom--;
+                dir = 4;
+            }
+            else if(dir == 4) {
+                j = left;
+                for(i=bottom; i>=top; i--) ans[indx++] = matrix[i][j];
+                left++;
+                dir = 1;
+            }
+        }
+        
+        
+        return ans;
+    }
 }
 
-int main()
-{
-    n = 3, m = 3;
-    for(int i=0; i<m; i++) {
-        for(int j=0; j<n; j++) cin>>ara[i][j];
-    }
-
-    for(int i=0; i<m; i++) {
-        for(int j=0; j<n; j++) vis[i][j] = false;
-    }
-    cout<<"7 is "<<vis[2][0]<<endl;
-    cout<<"2 1 is "<<ara[2][0]<<endl;
-    for(int i=0; i<m; i++) {
-        for(int j=0; j<n; j++) cout<<ara[i][j]<<" ";
-        cout<<endl;
-    }
-
-    spiral_order_matrix(0, 0, 0);
-    for(int i=0; i<n*m; i++) cout<<ans[i]<<" ";
-    cout<<endl;
-    return 0;
-}
