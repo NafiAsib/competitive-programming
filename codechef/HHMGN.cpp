@@ -3,10 +3,7 @@ using namespace std;
 
 int main()
 {
-    #ifndef ONLINE_JUDGE
-	    freopen("../io/in.txt", "r", stdin);
-	    // freopen("../io/out.txt", "w", stdout);
-    #endif // ONLINE_JUDGE
+   
     int tc;
     cin>>tc;
     while(tc--)
