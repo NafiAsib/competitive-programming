@@ -1,5 +1,8 @@
+soln.cpp
 a.out
+*out
 *.out
 *.txt
 io/
-cuet-competitive-club
+cuet-competitive-club/
+library/
