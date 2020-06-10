@@ -7,3 +7,4 @@ library/
 reference/
 projecteuler/emergencykey.txt
 misc/
+*.swp
